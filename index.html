@@ -58,7 +58,28 @@
 		</form>
 		<div id="message" class="message"></div>
 	</div>
-	<script src='https://script.google.com/macros/s/AKfycbzn3v0uCdNvYNTtxnAUZsgX9CwsJAXAFgUulvO7TwO4EeLgm9gVfv6QBZNOTgQSOM7luQ/exec'>
+	<script>
+		document.getElementById('loginForm').addEventListener('submit', function (event) {
+			event.preventDefault();
+			var username = document.getElementById('username').value;
+			var password = document.getElementById('password').value;
+			// Thay URL dưới đây bằng URL Apps Script của bạn
+			var scriptURL = 'https://script.google.com/macros/s/AKfycbzn3v0uCdNvYNTtxnAUZsgX9CwsJAXAFgUulvO7TwO4EeLgm9gVfv6QBZNOTgQSOM7luQ/exec';
+			document.getElementById('loginForm').addEventListener('submit', function (event) {
+				event.preventDefault();
+				var username = document.getElementById('username').value;
+				var password = document.getElementById('password').value;
+				// Thay URL dưới đây bằng URL Apps Script công khai của bạn
+				var scriptURL = 'https://script.google.com/macros/s/AKfycbzn3v0uCdNvYNTtxnAUZsgX9CwsJAXAFgUulvO7TwO4EeLgm9gVfv6QBZNOTgQSOM7luQ/exec';
+				fetch(scriptURL + '?username=' + username + '&password=' + password, {mode = "no-cors"})
+					.then(response => response.json())
+					.then(data => {
+						document.getElementById('message').textContent = data.message;
+						document.getElementById('message').style.color = data.success ? 'green' : 'red';
+					})
+					.catch(error => console.error('Error!', error));
+			});
+		});
 	</script>
 </body>
 
